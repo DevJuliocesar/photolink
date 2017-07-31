@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyApp</name>
+<widget id="com.vivelab.photolink" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>photoLink</name>
     <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <author email="jcmaldonadom@ufpso.edu.co" href="https://www.facebook.com/juliocesaryque">Ing. Julio Cesar Maldonado</author>
     <universal-links>
         <host name="https://xda94.app.goo.gl/" scheme="https" />
         <host name="photolink-c06c8.firebaseapp.com" scheme="https">

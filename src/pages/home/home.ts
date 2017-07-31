@@ -1,18 +1,27 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
-
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
 
+  name : any;
+  email: any;
+  photo: any;
+
   constructor(
     public navCtrl: NavController, 
+    private navParams: NavParams,
     private socialSharing: SocialSharing
   ) {
-
+    let info = navParams.get('id');
+    this.name = info.displayName;
+    this.email = info.email;
+    this.photo = info.photoURL;
+    console.log(info);
   }
 
   instagramShare(){

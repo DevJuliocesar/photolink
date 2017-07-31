@@ -8,13 +8,14 @@
 
 <ion-content padding>
   <p>
-    <em>I'm the hulk!</em>
+    <em>Yo soy {{name}}</em>
+    <em>Mi correo es {{email}}</em>
   </p>
 
-  <img src="assets/img/hulk.jpg" />
+  <img [src]="photo" />
 
   <button ion-button color="positive" block (click)="regularShare()">
-    Share me!
+    Comparteme!
   </button>
 
   <ion-grid>

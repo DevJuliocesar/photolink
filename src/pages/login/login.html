@@ -1,19 +1,34 @@
-<!--
-  Generated template for the LoginPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Login</ion-title>
+    <ion-title>Ingresar</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <div class="success">
+    <p>hola papa</p>
+  </div>
+  <p text-underline>asdsadadada</p>
+  <form novalidate (ngSubmit)="saveData( $event )">
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Correo:</ion-label>
+        <ion-input type="email" placeholder="Ej: mail@mail.com" [(ngModel)]="data.email" [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Contraseña:</ion-label>
+        <ion-input type="password" placeholder="Ej: 123456"  [(ngModel)]="data.password" [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+      <div padding>
+        <button ion-button block type="submit">
+          <ion-icon name="log-in"></ion-icon>Entrar
+        </button>
+      </div>
+    </ion-list>
+  </form>
   <button ion-button block (click)="loginFacebook()">Iniciar sesion con Facebook</button>
-  <button ion-button block (click)="loginFacebook2()">Iniciar sesion con Facebook 2</button>
 </ion-content>

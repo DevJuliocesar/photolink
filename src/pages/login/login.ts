@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import firebase from 'firebase';
 import { Facebook } from '@ionic-native/facebook';
 
@@ -10,11 +10,23 @@ import { Facebook } from '@ionic-native/facebook';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private facebook: Facebook) {
+  data: any = {};
+
+  constructor(public navCtrl: NavController, private facebook: Facebook) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  saveData( event: Event){
+    event.preventDefault();
+    console.log(this.data);
+    // this.navCtrl.setRoot('HomePage', { id : {
+    //   displayName : "prueba nombre",
+    //   email : "correo@correo.coma",
+    //   photoURL : "https://pixlr.com/assets/images/landing/gallery/5.jpg?1499678471"
+    // }});
   }
 
   loginFacebook(){
@@ -22,22 +34,11 @@ export class LoginPage {
     this.facebook.login(['email']).then((loginResponse) =>{
       let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
       firebase.auth().signInWithCredential(credential).then((info)=>{
+        this.navCtrl.setRoot('HomePage', { id : info });
         alert(JSON.stringify(info));
       })
     })
 
   }
-  
-  // loginFacebook2(){
-  //   let provider = new firebase.auth.FacebookAuthProvider();
-    
-  //   firebase.auth().signInWithRedirect(provider).then(()=>{
-  //     firebase.auth().getRedirectResult().then((result)=>{
-  //       alert(JSON.stringify(result));
-  //     }).catch(function(error) {
-  //       alert(JSON.stringify(error));
-  //     })
-  //   });
-  // }
 
 }
