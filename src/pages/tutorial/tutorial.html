@@ -1,15 +1,21 @@
 
 
 <ion-content>
-  <ion-slides pager loop>
-    <ion-slide>
-      <img src="assets/img/img1.jpg" alt="">
+  <ion-slides pager loop autoplay="5000">
+    <ion-slide class = "slide1">
+      <p>Comparte tus increibles imagenes con tus amigos</p>
     </ion-slide>
-    <ion-slide>
-      <img src="assets/img/img2.jpg" alt="">
+    <ion-slide class = "slide2">
+      <p>Toma imagenes en el preciso momento</p>
     </ion-slide>
-    <ion-slide>
-      <img src="assets/img/img3.jpg" alt="">
+    <ion-slide class = "slide3">
+      <p>Agrega pegatinas personalizadas</p>
     </ion-slide>
+    <ion-slide class = "slide4"></ion-slide>
+    <ion-slide class = "slide5"></ion-slide>
   </ion-slides>
+  <div class="buttons">
+    <button ion-button (click)="goToLoginPage()">Ingresar</button>
+    <button ion-button (click)="goToRegisterPage()">Registrarse</button>
+  </div>
 </ion-content>

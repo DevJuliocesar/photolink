@@ -1,3 +1,31 @@
 page-tutorial {
+    ion-slide{
+        background-size: auto 100%;
+        &.slide1{
+            background-image: url('../assets/img/img1.jpg');
+        }
+        &.slide2{
+            background-image: url('../assets/img/img2.jpg');
+        }
+        &.slide3{
+            background-image: url('../assets/img/img3.jpg');
+        }
+        &.slide4{
+            background-image: url('../assets/img/img6.jpg');
+        }
+        &.slide5{
+            background-image: url('../assets/img/img5.jpg');
+        }
+    }
 
+    .buttons {
+        position: absolute;
+        bottom: 50px;
+        z-index: 2;
+    }
+    p {
+        color: white;
+        text-shadow: 1px 1px 4px black;
+    }
+    
 }
