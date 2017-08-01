@@ -17,7 +17,7 @@ export class HomePage {
     private navParams: NavParams,
     private socialSharing: SocialSharing
   ) {
-    let info = navParams.get('id');
+    let info = this.navParams.get('id');
     this.name = info.displayName;
     this.email = info.email;
     this.photo = info.photoURL;
