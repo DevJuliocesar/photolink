@@ -8,18 +8,29 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { Facebook } from '@ionic-native/facebook';
-import firebase from 'firebase';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
-firebase.initializeApp({
+import { Facebook } from '@ionic-native/facebook';
+// import firebase from 'firebase';
+
+export const firebaseConfig = {
     apiKey: "AIzaSyDiZgXDmQR_2SwNeZn2yS__OAWxLxLxvhQ",
     authDomain: "photolink-c06c8.firebaseapp.com",
     databaseURL: "https://photolink-c06c8.firebaseio.com",
     projectId: "photolink-c06c8",
     storageBucket: "photolink-c06c8.appspot.com",
     messagingSenderId: "140141486876"
-  });
+};
+
+// firebase.initializeApp({
+//     apiKey: "AIzaSyDiZgXDmQR_2SwNeZn2yS__OAWxLxLxvhQ",
+//     authDomain: "photolink-c06c8.firebaseapp.com",
+//     databaseURL: "https://photolink-c06c8.firebaseio.com",
+//     projectId: "photolink-c06c8",
+//     storageBucket: "photolink-c06c8.appspot.com",
+//     messagingSenderId: "140141486876"
+//   });
 
 @NgModule({
   declarations: [
@@ -28,7 +39,10 @@ firebase.initializeApp({
   imports: [
     HttpModule,
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
