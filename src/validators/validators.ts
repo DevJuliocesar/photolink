@@ -11,6 +11,16 @@ export class MyValidators{
     }
   }
 
+  static isValid(control: FormControl){
+    const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(control.value);
+    if (re){
+      return null;
+    }
+    return {
+      "invalidEmail": true
+    };
+  }
+
   static passwordMatcher(group: AbstractControl){
     let password = group.get('password').value;
     let confimPassword = group.get('confirmPassword').value;

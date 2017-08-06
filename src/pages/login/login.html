@@ -1,19 +1,58 @@
-
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Ingresar</ion-title>
+    <ion-title>
+      Iniciar Sesion
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content class="background">
+  <ion-card>
+    <ion-card-header class= "titulo">
+      PhotoLink
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="loginUser()" novalidate>
+        <ion-list no-lines>
+          <ion-item>
+            <ion-label floating>Correo</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="loginForm.get('email').errors && loginForm.get('email').dirty">
+            <p ion-text color="primary" *ngIf="loginForm.get('email').hasError('required')">Campo requerido</p>
+            <p ion-text color="primary" *ngIf="loginForm.get('email').hasError('pattern')">No es un email valido</p>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Contraseña</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="loginForm.get('password').errors && loginForm.get('password').dirty">
+            <p ion-text color="primary" *ngIf="loginForm.get('password').hasError('required')">Campo requerido</p>
+            <p ion-text color="primary" *ngIf="loginForm.get('password').hasError('minlength')">Minimo 6 campos</p>
+          </ion-item>
+          <ion-item>
+            <p>Olvido la contraseña?<button ion-button (click)="goToResetPassword()" clear>Ingresa Aquí</button></p>
+          </ion-item>
+          <button ion-button block color="danger" type="submit" icon-left [disabled]="loginForm.invalid" outline>
+            <ion-icon name="log-in"></ion-icon>
+            Ingresar
+          </button>
+        </ion-list>
+        <b>OR</b>
+        <button ion-button block (click)="loginFacebook()" color="primary" >
+          <ion-icon name="logo-facebook"></ion-icon> Ingresar con Facebook
+        </button>
+        <button ion-button block (click)="loginGmail()" color="danger" >
+          <ion-icon name="logo-google"></ion-icon> Ingresar con Google
+        </button>
+      </form>
+    </ion-card-content>
+  </ion-card>
 
-<ion-content padding>
-  <div class="success">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora ea veritatis vero quam, illum accusamus, nihil itaque alias minima a cumque maiores voluptatem! Eius accusamus libero magnam, aspernatur, reiciendis nobis.</p>
+  <!-- <div class="success">
   </div>
   <p text-underline>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta veniam, neque, vero perferendis inventore dolore facere deserunt quae doloremque ullam molestiae odio tenetur, cumque sequi! Quam voluptatem ex labore aliquam.</p>
- <form [formGroup]="loginForm" (ngSubmit)="saveData( $event )" novalidate>
+ <form [formGroup]="loginForm" (ngSubmit)="loginUser()" novalidate>
     <ion-list>
       <ion-item>
         <ion-label stacked>Correo:</ion-label>
@@ -38,6 +77,13 @@
         Ingresar
       </button>
     </div>
-  </form>
-  <button ion-button block (click)="loginFacebook()">Iniciar sesion con Facebook</button>
+  </form> -->
+  <!-- <button ion-button block (click)="loginFacebook()">Iniciar sesion con Facebook</button>
+  <button ion-button block (click)="loginGmail()">Iniciar sesion con Gmail</button>
+  <button ion-button block clear (click)="goToResetPassword()">
+    I forgot my password 🙁
+  </button>
+  <button ion-button block clear (click)="createAccount()">
+    Create a new account
+  </button> -->
 </ion-content>
