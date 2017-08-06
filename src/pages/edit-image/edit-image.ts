@@ -1,12 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the EditImagePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -15,11 +8,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EditImagePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public viewCtrl: ViewController
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditImagePage');
+  }
+
+  closeModal(){
+    this.viewCtrl.dismiss();
   }
 
 }
