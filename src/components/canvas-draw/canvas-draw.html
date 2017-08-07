@@ -1,1 +1,6 @@
-<canvas #myCanvas width="200" height="200" style="border: 1px solid red"></canvas>
+<canvas #myCanvas style="border: 1px solid red"></canvas>
+<button ion-button (click)="addText()">texto</button>
+<button ion-button (click)="addImageOnCanvas()">imagen</button>
+<button ion-button (click)="addFigure()">figura</button>
+{{funcion}}
+<img [src]="photo" alt="">imagen

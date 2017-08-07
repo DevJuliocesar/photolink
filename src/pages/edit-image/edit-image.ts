@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Events } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,17 +8,44 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class EditImagePage {
 
+  openMenu = false;
+  funcion: any = '';
+  photo: any; 
+
+  items = [
+      'assets/img/iconos/sombrero.png',
+      'assets/img/iconos/tiple.png',
+      'assets/img/iconos/acordeon.png',
+      'assets/img/iconos/BicicletaCo.png',
+      'assets/img/iconos/patinadorCo.png',
+      'assets/img/iconos/pesasCo.png',
+      'assets/img/iconos/empanada.png',
+      'assets/img/iconos/bandeja-paisa.png',
+      'assets/img/iconos/lechona.png',
+      'assets/img/iconos/emojiCo.png',
+      'assets/img/iconos/pajaroCo.png',
+      'assets/img/iconos/superCo.png',
+  ];
+
   constructor(
     public navCtrl: NavController,
-    public viewCtrl: ViewController
+    public navParams: NavParams,
+    public viewCtrl: ViewController,
+    public events: Events
   ) {
+    this.photo = this.navParams.get('photo');
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EditImagePage');
+  togglePopupMenu() {
+    return this.openMenu = !this.openMenu;
   }
 
-  closeModal(){
+  goToPopup(data) {
+    this.funcion = data;
+    this.togglePopupMenu();
+  }
+
+  closeModal() {
     this.viewCtrl.dismiss();
   }
 

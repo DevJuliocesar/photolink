@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, Loading, AlertController, Events, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, Loading, AlertController, ModalController, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -30,17 +30,15 @@ export class HomePage {
     public authData: AuthProvider,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-    public events: Events,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public events: Events
   ) {
-
 
     afAuth.authState.subscribe(user => {
       if (user) {
         this.name = user.displayName;
         this.email = user.email;
         this.foto = user.photoURL;
-        this.events.publish('eventado', this.foto);
       }
     });
 
@@ -74,7 +72,9 @@ export class HomePage {
   }
 
   sendModal(){
-    let modal = this.modalCtrl.create('EditImagePage');
+    let modal = this.modalCtrl.create('EditImagePage', {
+      photo: this.foto
+    });
     modal.present();
   }
 

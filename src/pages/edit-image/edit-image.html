@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-title>Editar Imagen</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="closeModal()">
@@ -10,5 +10,17 @@
 </ion-header>
 
 <ion-content padding>
-  <canvas-draw></canvas-draw>
+  <canvas-draw [funcion]="funcion" [imagen]="photo"></canvas-draw>
+
+  <div class="popup-menu">
+    <div class="popup-menu-overlay" [ngClass]="{'in': openMenu}" (click)="togglePopupMenu()"></div>
+    <div class="popup-menu-toggle" (click)="togglePopupMenu()" [ngClass]="{'out': openMenu}"></div>
+    <div class="popup-menu-panel"  [ngClass]="{'in': openMenu}">
+      <div class="popup-menu-item" *ngFor="let item of items; let i = index" (click)="goToPopup(item)">
+        <ion-avatar item-start>
+          <img [src]="item">
+        </ion-avatar>
+      </div>
+    </div>
+  </div>
 </ion-content>
