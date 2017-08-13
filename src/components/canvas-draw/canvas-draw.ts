@@ -1,5 +1,5 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { Events } from 'ionic-angular';
+import { Events, Platform } from 'ionic-angular';
 import 'fabric';
 declare const fabric: any;
 
@@ -9,10 +9,9 @@ declare const fabric: any;
 })
 export class CanvasDrawComponent {
   photo: any;
-  @Input() set funcion(funcion: string){
-    console.log(funcion);
-    if(funcion != ''){
-      this.addImageOnCanvas(funcion);
+  @Input() set sticker(sticker: string){
+    if(sticker){
+      this.addImageOnCanvas(sticker);
     }
   };
   @Input() set imagen(imagen: string){
@@ -24,14 +23,15 @@ export class CanvasDrawComponent {
   text: string;
   private canvas;
   private textString: string;
-  foto: any;
 
-  constructor(public events: Events) {
-    this.foto = 'assets/img/iconos/sombrero.png';
+  constructor(public events: Events, public platform: Platform) {
   }
 
   ngAfterViewInit() {
     this.canvas = new fabric.Canvas(this.canvasJC.nativeElement);
+    this.canvas.setWidth(this.platform.width());
+    console.log(this.platform.height());
+    this.canvas.setHeight(this.platform.height());
   }
 
   addFigure(){
@@ -48,7 +48,6 @@ export class CanvasDrawComponent {
   }
 
   addText() {
-    let textString = this.textString;
     let text = new fabric.IText('hola', {
       left: 10,
       top: 10,
@@ -77,13 +76,7 @@ export class CanvasDrawComponent {
       });
       this.extend(image, this.randomId());
       this.canvas.add(image);
-      // this.selectItemAfterAdded(image);
     });
-  }
-
-  selectItemAfterAdded(obj) {
-    this.canvas.deactivateAllWithDispatch().renderAll();
-    this.canvas.setActiveObject(obj);
   }
 
   extend(obj, id) {

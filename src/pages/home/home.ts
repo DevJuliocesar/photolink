@@ -80,8 +80,8 @@ export class HomePage {
 
   takePhoto() {
     const options: CameraOptions = {
-      allowEdit: true,
-      quality: 100,
+      allowEdit: false,
+      quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
@@ -90,6 +90,7 @@ export class HomePage {
       .camera
       .getPicture(options)
       .then((imageData) => {
+        console.log(imageData);
         this.base64Image = "data:image/jpeg;base64," + imageData;
         this
           .photos

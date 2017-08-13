@@ -9,13 +9,24 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <canvas-draw [funcion]="funcion" [imagen]="photo"></canvas-draw>
+<ion-content>
+  <canvas-draw [sticker]="sticker" [imagen]="photo"></canvas-draw>
 
   <div class="popup-menu">
     <div class="popup-menu-overlay" [ngClass]="{'in': openMenu}" (click)="togglePopupMenu()"></div>
-    <div class="popup-menu-toggle" (click)="togglePopupMenu()" [ngClass]="{'out': openMenu}"></div>
-    <div class="popup-menu-panel"  [ngClass]="{'in': openMenu}">
+    <ion-fab right bottom>
+      <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+      <ion-fab-list side="top">
+        <button ion-fab (click)="togglePopupMenu()" [ngClass]="{'in': openMenu}">Facebook</button>
+        <button ion-fab>Twitter</button>
+        <button ion-fab>Youtube</button>
+      </ion-fab-list>
+    </ion-fab>
+
+    <div class="popup-menu-toggle" (click)="togglePopupMenu()" [ngClass]="{'out': openMenu}">
+
+    </div>
+    <div class="popup-menu-panel" [ngClass]="{'in': openMenu}">
       <div class="popup-menu-item" *ngFor="let item of items; let i = index" (click)="goToPopup(item)">
         <ion-avatar item-start>
           <img [src]="item">

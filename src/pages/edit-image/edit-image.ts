@@ -9,7 +9,7 @@ import { IonicPage, NavController, NavParams, ViewController, Events } from 'ion
 export class EditImagePage {
 
   openMenu = false;
-  funcion: any = '';
+  sticker: any = '';
   photo: any; 
 
   items = [
@@ -41,7 +41,7 @@ export class EditImagePage {
   }
 
   goToPopup(data) {
-    this.funcion = data;
+    this.sticker = data;
     this.togglePopupMenu();
   }
 
