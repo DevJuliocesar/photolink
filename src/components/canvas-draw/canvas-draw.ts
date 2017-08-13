@@ -8,14 +8,15 @@ declare const fabric: any;
   templateUrl: 'canvas-draw.html'
 })
 export class CanvasDrawComponent {
-  photo: any;
   @Input() set sticker(sticker: string){
     if(sticker){
       this.addImageOnCanvas(sticker);
     }
   };
   @Input() set imagen(imagen: string){
-    this.photo = imagen;
+    if(imagen){
+      this.addImageOnCanvas(imagen);
+    }
   };
   @ViewChild('myCanvas') canvasJC: any;
 

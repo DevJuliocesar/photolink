@@ -17,10 +17,8 @@ export class HomePage {
   name: any;
   email: any;
   foto: any;
-  photo: any;
   loading: Loading;
-  public photos: any;
-  public base64Image: string;
+  public photos: any = [];
 
   constructor(
     private camera: Camera,
@@ -48,22 +46,15 @@ export class HomePage {
     let confirm = this
       .alertCtrl
       .create({
-        title: 'Sure you want to delete this photo? There is NO undo!',
+        title: '¿Seguro que quieres eliminar esta foto?',
         message: '',
         buttons: [
           {
-            text: 'No',
-            handler: () => {
-              console.log('Disagree clicked');
-            }
+            text: 'No'
           }, {
-            text: 'Yes',
+            text: 'Si',
             handler: () => {
-              console.log('Agree clicked');
-              this
-                .photos
-                .splice(index, 1);
-              //return true;
+              this.photos.splice(index, 1);
             }
           }
         ]
@@ -71,11 +62,28 @@ export class HomePage {
     confirm.present();
   }
 
-  sendModal(){
-    let modal = this.modalCtrl.create('EditImagePage', {
-      photo: this.foto
-    });
-    modal.present();
+  sendModal(id) {
+    let confirm = this
+      .alertCtrl
+      .create({
+        title: 'Gestionar Foto',
+        message: 'Agregar pegatinas y compartir imagen',
+        buttons: [
+          {
+            text: 'No'
+          }, {
+            text: 'Si',
+            handler: () => {
+              let modal = this.modalCtrl.create('EditImagePage', {
+                photo: this.photos[id]
+              });
+              modal.present();
+            }
+          }
+        ]
+      });
+    confirm.present();
+
   }
 
   takePhoto() {
@@ -90,11 +98,10 @@ export class HomePage {
       .camera
       .getPicture(options)
       .then((imageData) => {
-        console.log(imageData);
-        this.base64Image = "data:image/jpeg;base64," + imageData;
+        let base64Image = "data:image/jpeg;base64," + imageData;
         this
           .photos
-          .push(this.base64Image);
+          .push(base64Image);
         this
           .photos
           .reverse();

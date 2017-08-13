@@ -10,7 +10,7 @@ export class EditImagePage {
 
   openMenu = false;
   sticker: any = '';
-  photo: any; 
+  photo: any = ''; 
 
   items = [
       'assets/img/iconos/sombrero.png',
