@@ -1,5 +1,8 @@
 {
   "name": "photoLink",
   "app_id": "660b9ff3",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

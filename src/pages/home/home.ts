@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, Loading, AlertController, ModalController, Events } from 'ionic-angular';
+import { IonicPage, Platform, NavController, LoadingController, Loading, AlertController, ModalController, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -29,7 +29,8 @@ export class HomePage {
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
-    public events: Events
+    public events: Events,
+    public platform: Platform
   ) {
 
     afAuth.authState.subscribe(user => {
@@ -87,18 +88,24 @@ export class HomePage {
   }
 
   takePhoto() {
+    console.log(this.platform.width());
+    console.log(this.platform.height());
+
     const options: CameraOptions = {
       allowEdit: false,
-      quality: 50,
+      quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      targetWidth: this.platform.width(),
+      targetHeight: this.platform.height(),
+      correctOrientation: true,
     }
     this
       .camera
       .getPicture(options)
       .then((imageData) => {
-        let base64Image = "data:image/jpeg;base64," + imageData;
+        let base64Image = "data:image/jpg;base64," + imageData;
         this
           .photos
           .push(base64Image);

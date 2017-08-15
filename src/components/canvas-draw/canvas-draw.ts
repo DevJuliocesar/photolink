@@ -8,14 +8,15 @@ declare const fabric: any;
   templateUrl: 'canvas-draw.html'
 })
 export class CanvasDrawComponent {
-  @Input() set sticker(sticker: string){
-    if(sticker){
+  foto: any;
+  @Input() set sticker(sticker: string) {
+    if (sticker) {
       this.addImageOnCanvas(sticker);
     }
   };
-  @Input() set imagen(imagen: string){
-    if(imagen){
-      this.addImageOnCanvas(imagen);
+  @Input() set imagen(imagen: string) {
+    if (imagen) {
+      this.foto = imagen;
     }
   };
   @ViewChild('myCanvas') canvasJC: any;
@@ -30,12 +31,32 @@ export class CanvasDrawComponent {
 
   ngAfterViewInit() {
     this.canvas = new fabric.Canvas(this.canvasJC.nativeElement);
+
     this.canvas.setWidth(this.platform.width());
-    console.log(this.platform.height());
+    this.canvas.width = this.platform.width();
     this.canvas.setHeight(this.platform.height());
+    this.canvas.height = this.platform.height();
+
+    if (this.foto) {
+
+      // fabric.Image.fromURL(this.foto, function (img) {
+      //   img.set({ width: this.canvas.width, height: this.canvas.height, originX: 'left', originY: 'top' });
+      //   this.canvas.setBackgroundImage(img, this.canvas.renderAll.bind(this.canvas));
+      // });
+
+      this.canvas.setBackgroundImage(this.foto, this.canvas.renderAll.bind(this.canvas), {
+        width: this.canvas.width,
+        height: this.canvas.height,
+        // Needed to position backgroundImage at 0/0
+        originX: 'left',
+        originY: 'top'
+      });
+    }
+
+
   }
 
-  addFigure(){
+  addFigure() {
     let boundBox = new fabric.Rect({
       left: 10,
       top: 10,
