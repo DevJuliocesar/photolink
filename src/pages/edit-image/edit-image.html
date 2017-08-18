@@ -10,16 +10,17 @@
 </ion-header>
 
 <ion-content>
-  <canvas-draw [sticker]="sticker" [imagen]="photo"></canvas-draw>
+  <canvas #myCanvas style="border: 1px solid red"></canvas>
 
   <div class="popup-menu">
     <div class="popup-menu-overlay" [ngClass]="{'in': openMenu}" (click)="togglePopupMenu()"></div>
+
     <ion-fab right bottom>
       <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
       <ion-fab-list side="top">
         <button ion-fab (click)="togglePopupMenu()" [ngClass]="{'in': openMenu}">Facebook</button>
-        <button ion-fab>Twitter</button>
-        <button ion-fab>Youtube</button>
+        <button ion-fab (click)="undoLastObject()">Twitter</button>
+        <button ion-fab (click)="saveDrawing()">Youtube</button>
       </ion-fab-list>
     </ion-fab>
 

@@ -1,5 +1,5 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { Events, Platform } from 'ionic-angular';
+import { Events, Platform, AlertController } from 'ionic-angular';
 import 'fabric';
 declare const fabric: any;
 
@@ -19,42 +19,56 @@ export class CanvasDrawComponent {
       this.foto = imagen;
     }
   };
+  @Input() set borrar(borrar: string) {
+    if (borrar) {
+      this.undoLastObject();
+    }
+  };
   @ViewChild('myCanvas') canvasJC: any;
 
   CanvasElement: any;
   text: string;
   private canvas;
   private textString: string;
+  datoW: any;
+  datoH: any;
 
-  constructor(public events: Events, public platform: Platform) {
+  constructor(public events: Events, public platform: Platform, private alertCtrl: AlertController) {
   }
 
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     this.canvas = new fabric.Canvas(this.canvasJC.nativeElement);
-
+    this.datoH = this.platform.height() - 56;
+    this.datoW = this.platform.width();
     this.canvas.setWidth(this.platform.width());
     this.canvas.width = this.platform.width();
-    this.canvas.setHeight(this.platform.height());
-    this.canvas.height = this.platform.height();
+    this.canvas.setHeight(this.datoH);
+    this.canvas.height = this.datoH;
 
     if (this.foto) {
 
-      // fabric.Image.fromURL(this.foto, function (img) {
-      //   img.set({ width: this.canvas.width, height: this.canvas.height, originX: 'left', originY: 'top' });
-      //   this.canvas.setBackgroundImage(img, this.canvas.renderAll.bind(this.canvas));
-      // });
-
       this.canvas.setBackgroundImage(this.foto, this.canvas.renderAll.bind(this.canvas), {
-        width: this.canvas.width,
-        height: this.canvas.height,
-        // Needed to position backgroundImage at 0/0
         originX: 'left',
         originY: 'top'
       });
+      this.presentAlert();
     }
-
-
   }
+
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Edición',
+      subTitle: 'Esta en modo edición su imagen',
+      buttons: [{
+        text: 'Cerrar',
+        handler: () => {
+          this.canvas.backgroundImage.scaleToHeight(this.datoH);
+        }
+      }]
+    });
+    alert.present();
+  }
+
 
   addFigure() {
     let boundBox = new fabric.Rect({
@@ -112,6 +126,13 @@ export class CanvasDrawComponent {
   }
   randomId() {
     return Math.floor(Math.random() * 999999) + 1;
+  }
+
+  undoLastObject() {
+    let canvas_objects = this.canvas._objects;
+    let last = canvas_objects[canvas_objects.length - 1];
+    this.canvas.remove(last);
+    this.canvas.renderAll();
   }
 
 }

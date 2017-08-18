@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, Platform, NavController, LoadingController, Loading, AlertController, ModalController, Events } from 'ionic-angular';
+import { IonicPage, Platform, NavController, NavParams, LoadingController, Loading, AlertController, ModalController, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../../providers/auth/auth';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { PhotoLibrary } from '@ionic-native/photo-library';
 
 @IonicPage()
 
@@ -30,8 +31,15 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public events: Events,
-    public platform: Platform
+    public platform: Platform,
+    public navParams: NavParams,
+    private photoLibrary: PhotoLibrary
   ) {
+
+    let agregarImage = this.navParams.get('foto')
+    if (agregarImage) {
+      this.photos.push(agregarImage);
+    }
 
     afAuth.authState.subscribe(user => {
       if (user) {
@@ -63,6 +71,10 @@ export class HomePage {
     confirm.present();
   }
 
+  sendEdit() {
+    this.navCtrl.push('EditImagePage');
+  }
+
   sendModal(id) {
     let confirm = this
       .alertCtrl
@@ -71,16 +83,27 @@ export class HomePage {
         message: 'Agregar pegatinas y compartir imagen',
         buttons: [
           {
-            text: 'No'
-          }, {
-            text: 'Si',
+            text: 'Cancelar'
+          }, 
+          {
+            text: 'Modificar',
             handler: () => {
               let modal = this.modalCtrl.create('EditImagePage', {
                 photo: this.photos[id]
               });
               modal.present();
             }
-          }
+          },
+          {
+            text: 'Guardar',
+            handler: () => {
+              this.photoLibrary.requestAuthorization().then(() => {
+                console.log('hola');
+                this.photoLibrary.saveImage(this.photos[id], 'photoLink');
+              });
+            }
+          },
+
         ]
       });
     confirm.present();
@@ -88,24 +111,21 @@ export class HomePage {
   }
 
   takePhoto() {
-    console.log(this.platform.width());
-    console.log(this.platform.height());
-
+    let dato = this.platform.height() - 56;
     const options: CameraOptions = {
       allowEdit: false,
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      targetWidth: this.platform.width(),
-      targetHeight: this.platform.height(),
+      targetHeight: 1024,
       correctOrientation: true,
     }
     this
       .camera
       .getPicture(options)
       .then((imageData) => {
-        let base64Image = "data:image/jpg;base64," + imageData;
+        let base64Image = "data:image/png;base64," + imageData;
         this
           .photos
           .push(base64Image);

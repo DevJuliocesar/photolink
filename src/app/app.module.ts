@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Camera } from '@ionic-native/camera';
+import { PhotoLibrary } from '@ionic-native/photo-library';
 import { HttpModule } from '@angular/http';
 
 import { AngularFireModule } from 'angularfire2';
@@ -53,6 +54,7 @@ firebase.initializeApp(firebaseConfig);
     GooglePlus,
     Facebook,
     Camera,
+    PhotoLibrary,
     AuthProvider
   ]
 })
