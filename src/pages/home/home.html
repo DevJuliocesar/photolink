@@ -1,4 +1,4 @@
-<ion-content padding class="card-background-page">
+<ion-content padding>
   <p>
     <em>Yo soy {{name}}</em>
     <em>Mi correo es {{email}}</em>
@@ -8,9 +8,6 @@
 
   <button ion-button color="positive" block (click)='takePhoto()'>
     <ion-icon name="camera"></ion-icon> &nbsp;&nbsp; Tomar Foto
-  </button>
-  <button ion-button color="positive" block (click)='sendEdit()'>
-    <ion-icon name="camera"></ion-icon>provisional
   </button>
 
   <ion-grid>
@@ -24,24 +21,20 @@
     </ion-row>
   </ion-grid>
 
-  <button ion-button color="positive" block (click)="regularShare()">
-    Comparteme!
-  </button>
-
   <ion-grid>
     <ion-row>
       <ion-col>
-        <button ion-button icon-only (click)="twitterShare()" color="dark" clear>
+        <button ion-button icon-only (click)="twitterShare()" color="twitter" clear>
           <ion-icon class="share-icon" name="logo-twitter"></ion-icon>
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-only (click)="whatsappShare()" color="dark" clear>
+        <button ion-button icon-only (click)="whatsappShare()" color="secondary" clear>
           <ion-icon class="share-icon" name="logo-whatsapp"></ion-icon>
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-only (click)="instagramShare()" color="dark" clear>
+        <button ion-button icon-only (click)="instagramShare()" color="instagram" clear>
           <ion-icon class="share-icon" name="logo-instagram"></ion-icon>
         </button>
       </ion-col>

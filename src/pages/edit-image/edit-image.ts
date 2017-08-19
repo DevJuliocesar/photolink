@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Platform, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, Platform, NavParams, ViewController, AlertController } from 'ionic-angular';
 import 'fabric';
 declare const fabric: any;
 
@@ -29,7 +29,8 @@ export class EditImagePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    public platform: Platform
+    public platform: Platform, 
+    private alertCtrl: AlertController
   ) {}
 
   ngAfterContentInit() {
@@ -47,7 +48,22 @@ export class EditImagePage {
         originX: 'left',
         originY: 'top'
       });
+      this.presentAlert();
     }
+  }
+
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Edición',
+      subTitle: 'Esta en modo edición su imagen',
+      buttons: [{
+        text: 'Cerrar',
+        handler: () => {
+          this.canvas.backgroundImage.scaleToHeight(this.datoH);
+        }
+      }]
+    });
+    alert.present();
   }
 
   togglePopupMenu() {
@@ -64,8 +80,9 @@ export class EditImagePage {
   }
 
   addImageOnCanvas(imagen) {
+    this.canvas.backgroundImage.scaleToHeight(this.datoH);
     fabric.Image.fromURL(imagen, (image) => {
-      image.scale(0.3).set({
+      image.scale(0.2).set({
         left: 10,
         top: 10,
         angle: 0,

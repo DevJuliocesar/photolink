@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, Platform, NavController, NavParams, LoadingController, Loading, AlertController, ModalController, Events } from 'ionic-angular';
+import { IonicPage, Platform, NavController, NavParams, LoadingController, Loading, AlertController, ModalController, Events, ActionSheetController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -33,7 +33,8 @@ export class HomePage {
     public events: Events,
     public platform: Platform,
     public navParams: NavParams,
-    private photoLibrary: PhotoLibrary
+    private photoLibrary: PhotoLibrary,
+    public actionSheetCtrl: ActionSheetController
   ) {
 
     let agregarImage = this.navParams.get('foto')
@@ -76,37 +77,51 @@ export class HomePage {
   }
 
   sendModal(id) {
-    let confirm = this
-      .alertCtrl
-      .create({
-        title: 'Gestionar Foto',
-        message: 'Agregar pegatinas y compartir imagen',
-        buttons: [
-          {
-            text: 'Cancelar'
-          }, 
-          {
-            text: 'Modificar',
-            handler: () => {
-              let modal = this.modalCtrl.create('EditImagePage', {
-                photo: this.photos[id]
-              });
-              modal.present();
-            }
-          },
-          {
-            text: 'Guardar',
-            handler: () => {
-              this.photoLibrary.requestAuthorization().then(() => {
-                console.log('hola');
-                this.photoLibrary.saveImage(this.photos[id], 'photoLink');
-              });
-            }
-          },
-
-        ]
-      });
-    confirm.present();
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Gestionar Foto',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.deletePhoto(id);
+          }
+        }, {
+          text: 'Compartir',
+          icon: 'share',
+          handler: () => {
+            this.socialSharing.share("Mira lo que hice con PhotoLink, que esperas vos?", null, this.photos[id], null);
+          }
+        }, {
+          text: 'Editar',
+          icon: 'brush',
+          handler: () => {
+            let modal = this.modalCtrl.create('EditImagePage', {
+              photo: this.photos[id]
+            });
+            modal.present();
+          }
+        }, {
+          text: 'Guardar',
+          icon: 'archive',
+          handler: () => {
+            this.photoLibrary.requestAuthorization().then(() => {
+              this.photoLibrary.saveImage(this.photos[id], 'photoLink');
+            });
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: 'close',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
 
   }
 
@@ -138,20 +153,20 @@ export class HomePage {
   }
 
   instagramShare() {
-    this.socialSharing.shareViaInstagram(`Testing, sharing this from inside an app I'm building right now`, "www/assets/img/hulk.jpg");
+    this.socialSharing.shareViaInstagram(`PhotoLink la app de tu región`, "www/assets/icon/photolink.png");
   }
 
   twitterShare() {
-    this.socialSharing.shareViaTwitter("Testing, sharing this from inside an app I'm building right now", "www/assets/img/hulk.jpg", null);
+    this.socialSharing.shareViaTwitter("PhotoLink la app de tu región", "www/assets/icon/photolink.png", null);
   }
 
   regularShare() {
     // share(message, subject, file, url)
-    this.socialSharing.share("Testing, sharing this from inside an app I'm building right now", null, "www/assets/img/hulk.jpg", null);
+    this.socialSharing.share("PhotoLink la app de tu región", null, "www/assets/icon/photolink.png", null);
   }
 
   whatsappShare() {
-    this.socialSharing.shareViaWhatsApp("Testing, sharing this from inside an app I'm building right now", "www/assets/img/hulk.jpg", null);
+    this.socialSharing.shareViaWhatsApp("PhotoLink la app de tu región", "www/assets/icon/photolink.png", null);
   }
 
   logoutUser() {
