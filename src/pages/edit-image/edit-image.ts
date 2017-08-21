@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Platform, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { IonicPage, NavController, Platform, NavParams, ViewController, AlertController, PopoverController } from 'ionic-angular';
+import { PopoverComponent } from '../../components/popover/popover';
 import 'fabric';
 declare const fabric: any;
 
@@ -10,7 +11,7 @@ declare const fabric: any;
 })
 export class EditImagePage {
 
-  @ViewChild('myCanvas') canvasJC: any;
+  @ViewChild('myCanvas', { read: ElementRef }) canvasJC: ElementRef;
 
   openMenu = false;
 
@@ -29,9 +30,10 @@ export class EditImagePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    public platform: Platform, 
-    private alertCtrl: AlertController
-  ) {}
+    public platform: Platform,
+    private alertCtrl: AlertController,
+    private popoverCtrl: PopoverController
+  ) { }
 
   ngAfterContentInit() {
     this.canvas = new fabric.Canvas(this.canvasJC.nativeElement);
@@ -64,6 +66,15 @@ export class EditImagePage {
       }]
     });
     alert.present();
+  }
+
+  presentPopover(ev) {
+    let popover = this.popoverCtrl.create(PopoverComponent, {
+      contentEle: this.canvas
+    });
+    popover.present({
+      ev: ev
+    });
   }
 
   togglePopupMenu() {
@@ -115,9 +126,23 @@ export class EditImagePage {
     this.canvas.renderAll();
   }
 
-  saveDrawing(){
+  deleteAllObject() {
+    let canvas_objects = this.canvas._objects;
+    let all = canvas_objects;
+    console.log(all);
+    this.canvas.remove(all);
+    this.canvas.renderAll();
+  }
+
+  selectDeleteObject() {
+    if (this.canvas.getActiveObject()) {
+      this.canvas.getActiveObject().remove();
+    }
+  }
+
+  saveDrawing() {
     let drawing = this.canvas.toDataURL();
-    this.navCtrl.push('HomePage', {foto : drawing});
+    this.navCtrl.push('HomePage', { foto: drawing });
     this.viewCtrl.dismiss();
   }
 

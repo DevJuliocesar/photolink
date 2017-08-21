@@ -12,21 +12,19 @@
 <ion-content>
   <canvas #myCanvas style="border: 1px solid red"></canvas>
 
+  <ion-fab right bottom>
+    <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab color='dark' (click)="togglePopupMenu()" [ngClass]="{'in': openMenu}"><ion-icon name="open"></ion-icon></button>
+      <button ion-fab color='dark' (click)="undoLastObject()"><ion-icon name="return-left"></ion-icon></button>
+      <button ion-fab color='dark' (click)="saveDrawing()"><ion-icon name="cloud-upload"></ion-icon></button>
+      <button ion-fab color='dark' (click)="selectDeleteObject()"><ion-icon name="trash"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
   <div class="popup-menu">
-    <div class="popup-menu-overlay" [ngClass]="{'in': openMenu}" (click)="togglePopupMenu()"></div>
-
-    <ion-fab right bottom>
-      <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
-      <ion-fab-list side="top">
-        <button ion-fab (click)="togglePopupMenu()" [ngClass]="{'in': openMenu}">Facebook</button>
-        <button ion-fab (click)="undoLastObject()">Twitter</button>
-        <button ion-fab (click)="saveDrawing()">Youtube</button>
-      </ion-fab-list>
-    </ion-fab>
-
-    <div class="popup-menu-toggle" (click)="togglePopupMenu()" [ngClass]="{'out': openMenu}">
-
-    </div>
+    <div class="popup-menu-overlay" (click)="togglePopupMenu()" [ngClass]="{'in': openMenu}"></div>
+    <div class="popup-menu-toggle" (click)="togglePopupMenu()" [ngClass]="{'out': openMenu}"></div>
     <div class="popup-menu-panel" [ngClass]="{'in': openMenu}">
       <div class="popup-menu-item" *ngFor="let item of items; let i = index" (click)="goToPopup(item)">
         <ion-avatar item-start>
@@ -36,3 +34,23 @@
     </div>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color='dark'>
+    <ion-buttons left>
+      <button ion-button (click)="presentPopover($event)" icon-only solid>
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button (click)="presentPopover($event)" icon-only solid>
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button (click)="presentPopover($event)" icon-only solid>
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -43,6 +43,7 @@ export class HomePage {
     }
 
     afAuth.authState.subscribe(user => {
+      console.log(user);
       if (user) {
         this.name = user.displayName;
         this.email = user.email;

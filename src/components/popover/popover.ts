@@ -1,22 +1,33 @@
 import { Component } from '@angular/core';
+import { NavParams } from 'ionic-angular';
+import 'fabric';
+declare const fabric: any;
 
-/**
- * Generated class for the PopoverComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
 @Component({
   selector: 'popover',
   templateUrl: 'popover.html'
 })
 export class PopoverComponent {
+  private canvas;
+  constructor(private navParams: NavParams) {}
 
-  text: string;
+  ngOnInit() {
+    if (this.navParams.data) {
+      this.canvas = this.navParams.data.contentEle;
+    }
+  }
 
-  constructor() {
-    console.log('Hello PopoverComponent Component');
-    this.text = 'Hello World';
+  addFigure() {
+    let boundBox = new fabric.Rect({
+      left: 10,
+      top: 10,
+      width: 50,
+      height: 50,
+      fill: 'red',
+      stroke: '#666',
+      strokeDashArray: [5, 5]
+    });
+    this.canvas.add(boundBox);
   }
 
 }
