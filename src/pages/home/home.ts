@@ -5,6 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../../providers/auth/auth';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PhotoLibrary } from '@ionic-native/photo-library';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @IonicPage()
 
@@ -34,16 +35,18 @@ export class HomePage {
     public platform: Platform,
     public navParams: NavParams,
     private photoLibrary: PhotoLibrary,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    private screenOrientation: ScreenOrientation
   ) {
-
+    if (platform.is('cordova')) {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    }
     let agregarImage = this.navParams.get('foto')
     if (agregarImage) {
       this.photos.push(agregarImage);
     }
 
     afAuth.authState.subscribe(user => {
-      console.log(user);
       if (user) {
         this.name = user.displayName;
         this.email = user.email;
@@ -134,7 +137,7 @@ export class HomePage {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      targetHeight: 1024,
+      targetHeight: 1920,
       correctOrientation: true,
     }
     this
@@ -174,7 +177,6 @@ export class HomePage {
     this.authData.logoutUser()
       .then((info) => {
         this.navCtrl.setRoot('TutorialPage');
-        console.log(info);
       }, error => {
         this.loading.dismiss().then(() => {
           let alert = this.alertCtrl.create({

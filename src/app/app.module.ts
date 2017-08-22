@@ -10,6 +10,7 @@ import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Camera } from '@ionic-native/camera';
 import { PhotoLibrary } from '@ionic-native/photo-library';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { HttpModule } from '@angular/http';
 
 import { AngularFireModule } from 'angularfire2';
@@ -58,6 +59,7 @@ firebase.initializeApp(firebaseConfig);
     Facebook,
     Camera,
     PhotoLibrary,
+    ScreenOrientation,
     AuthProvider
   ]
 })

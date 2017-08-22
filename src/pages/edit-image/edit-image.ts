@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Platform, NavParams, ViewController, AlertController, PopoverController } from 'ionic-angular';
 import { PopoverComponent } from '../../components/popover/popover';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import 'fabric';
 declare const fabric: any;
 
@@ -14,10 +15,7 @@ export class EditImagePage {
   @ViewChild('myCanvas', { read: ElementRef }) canvasJC: ElementRef;
 
   openMenu = false;
-
   private canvas;
-  private datoW: any;
-  private datoH: any;
 
   items = [
     'assets/img/iconos/BARBATUSCA.svg',
@@ -32,40 +30,46 @@ export class EditImagePage {
     public viewCtrl: ViewController,
     public platform: Platform,
     private alertCtrl: AlertController,
-    private popoverCtrl: PopoverController
+    private popoverCtrl: PopoverController,
+    private screenOrientation: ScreenOrientation
   ) { }
 
   ngAfterContentInit() {
-    this.canvas = new fabric.Canvas(this.canvasJC.nativeElement);
-    this.datoH = this.platform.height() - 56;
-    this.datoW = this.platform.width();
-    this.canvas.setWidth(this.platform.width());
-    this.canvas.width = this.platform.width();
-    this.canvas.setHeight(this.datoH);
-    this.canvas.height = this.datoH;
 
-    if (this.navParams.get('photo')) {
-      let foto = this.navParams.get('photo')
-      this.canvas.setBackgroundImage(foto, this.canvas.renderAll.bind(this.canvas), {
-        originX: 'left',
-        originY: 'top'
-      });
-      this.presentAlert();
+    this.canvas = new fabric.Canvas(this.canvasJC.nativeElement); //Creacion del canvas con fabric
+    this.containerResize(); //Redimensionar canvas al contenedor
+
+    if (this.navParams.get('photo')) { // Si es nativo
+      this.setBackgroundImageToCanvas(this.navParams.get('photo'));
+    } else {      // Si no esm nativo, borrar esto
+      this.setBackgroundImageToCanvas('http://i.imgur.com/tENv1w4.jpg');
     }
   }
 
-  presentAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'Edición',
-      subTitle: 'Esta en modo edición su imagen',
-      buttons: [{
-        text: 'Cerrar',
-        handler: () => {
-          this.canvas.backgroundImage.scaleToHeight(this.datoH);
-        }
-      }]
-    });
-    alert.present();
+  containerResize() {
+    this.canvas.setWidth(this.platform.width());
+    this.canvas.setHeight(this.platform.height() - 112);
+    this.canvas.width = this.platform.width();
+    this.canvas.height = this.platform.height() - 112;
+  }
+
+  setBackgroundImageToCanvas(image) {
+    let img = new Image();
+    let foto = image;
+    img.crossOrigin = "anonymous";
+    img.src = foto;
+    let canvas = this.canvas;
+    img.onload = function () {
+      canvas.setBackgroundImage(new fabric.Image(img, {
+        scaleY: canvas.width / img.width,
+        scaleX: canvas.width / img.width,
+        originX: 'left',
+        originY: 'top'
+      }), canvas.renderAll.bind(canvas));
+      if (img.height > 0) {
+        canvas.setHeight(img.height * (canvas.width / img.width));
+      }
+    }
   }
 
   presentPopover(ev) {
@@ -91,13 +95,12 @@ export class EditImagePage {
   }
 
   addImageOnCanvas(imagen) {
-    this.canvas.backgroundImage.scaleToHeight(this.datoH);
+    // this.canvas.backgroundImage.scaleToHeight(this.datoH);
     fabric.Image.fromURL(imagen, (image) => {
       image.scale(0.2).set({
         left: 10,
         top: 10,
         angle: 0,
-        padding: 10,
         cornersize: 10,
         hasRotatingPoint: true
       });
