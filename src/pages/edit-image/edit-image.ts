@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Platform, NavParams, ViewController, AlertController, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, Platform, NavParams, ViewController, PopoverController } from 'ionic-angular';
 import { PopoverComponent } from '../../components/popover/popover';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { TextComponent } from '../../components/text/text';
 import 'fabric';
 declare const fabric: any;
 
@@ -13,9 +13,13 @@ declare const fabric: any;
 export class EditImagePage {
 
   @ViewChild('myCanvas', { read: ElementRef }) canvasJC: ElementRef;
+  @ViewChild('styleIcon', { read: ElementRef }) styleIcon: ElementRef;
 
   openMenu = false;
   private canvas;
+  iconMove: string = 'ios-brush';
+  textString: string;
+  showColorPaletteIcon = false;
 
   items = [
     'assets/img/iconos/BARBATUSCA.svg',
@@ -29,14 +33,13 @@ export class EditImagePage {
     public navParams: NavParams,
     public viewCtrl: ViewController,
     public platform: Platform,
-    private alertCtrl: AlertController,
-    private popoverCtrl: PopoverController,
-    private screenOrientation: ScreenOrientation
+    private popoverCtrl: PopoverController
   ) { }
 
   ngAfterContentInit() {
-
     this.canvas = new fabric.Canvas(this.canvasJC.nativeElement); //Creacion del canvas con fabric
+    this.canvas.isDrawingMode = false;
+    this.canvas.freeDrawingBrush.width = 6;
     this.containerResize(); //Redimensionar canvas al contenedor
 
     if (this.navParams.get('photo')) { // Si es nativo
@@ -72,9 +75,24 @@ export class EditImagePage {
     }
   }
 
+  drawingMode() {
+    if (this.canvas.isDrawingMode == true) {
+      // if fabric is in drawing mode, exit drawing mode
+      this.showColorPaletteIcon = false; // hind color palette icon
+      this.canvas.isDrawingMode = false;
+      this.iconMove = 'ios-brush';
+    } else {
+      // if fabric is not in drawing mode, enter drawing mode
+      this.showColorPaletteIcon = true; // show color palette icon
+      this.canvas.isDrawingMode = true;
+      this.iconMove = 'hand';
+    }
+  }
+
   presentPopover(ev) {
     let popover = this.popoverCtrl.create(PopoverComponent, {
-      contentEle: this.canvas
+      contentEle: this.canvas,
+      iconPaleta: this.styleIcon.nativeElement
     });
     popover.present({
       ev: ev
@@ -94,8 +112,19 @@ export class EditImagePage {
     this.viewCtrl.dismiss();
   }
 
+  addText(ev) {
+    let popover = this.popoverCtrl.create(TextComponent, {
+      contentEle: this.canvas,
+    });
+    popover.present({
+      ev: ev
+    });
+  }
+
   addImageOnCanvas(imagen) {
-    // this.canvas.backgroundImage.scaleToHeight(this.datoH);
+    this.showColorPaletteIcon = false; // hind color palette icon
+    this.canvas.isDrawingMode = false;
+    this.iconMove = 'ios-brush';
     fabric.Image.fromURL(imagen, (image) => {
       image.scale(0.2).set({
         left: 10,
@@ -126,14 +155,6 @@ export class EditImagePage {
     let canvas_objects = this.canvas._objects;
     let last = canvas_objects[canvas_objects.length - 1];
     this.canvas.remove(last);
-    this.canvas.renderAll();
-  }
-
-  deleteAllObject() {
-    let canvas_objects = this.canvas._objects;
-    let all = canvas_objects;
-    console.log(all);
-    this.canvas.remove(all);
     this.canvas.renderAll();
   }
 

@@ -1,4 +1,7 @@
 page-edit-image {
+  .content {
+    background: #222;
+  }
   .container {
     background-color: map-get($colors, dark); 
     align-items: center;

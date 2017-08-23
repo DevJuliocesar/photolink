@@ -1,0 +1,15 @@
+<ion-list radio-group>
+  <ion-row class="popover-row-dots">
+    <div *ngFor="let color of colors; let i=index">
+      <ion-col>
+        <button (click)="changeBackground(color.color)" [class.selected]="background == color.color" ion-button="popover-dot" [style.background-color]="color.color"></button>
+      </ion-col>
+    </div>
+  </ion-row>
+</ion-list>
+<form (ngSubmit)="logForm()">
+  <ion-item>
+    <ion-input placeholder="Ingresar Texto" type="text" clearInput [(ngModel)]="todo.text" name="text"></ion-input>
+  </ion-item>
+  <button ion-button [style.background-color]="background" type="submit" block>Agregar Texto</button>
+</form>

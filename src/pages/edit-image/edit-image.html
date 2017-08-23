@@ -14,19 +14,21 @@
     <canvas #myCanvas></canvas>
   </div>
 
-  <ion-fab right bottom>
-    <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button ion-fab color='dark' (click)="togglePopupMenu()" [ngClass]="{'in': openMenu}"><ion-icon name="open"></ion-icon></button>
-      <button ion-fab color='dark' (click)="undoLastObject()"><ion-icon name="return-left"></ion-icon></button>
-      <button ion-fab color='dark' (click)="saveDrawing()"><ion-icon name="cloud-upload"></ion-icon></button>
-      <button ion-fab color='dark' (click)="selectDeleteObject()"><ion-icon name="trash"></ion-icon></button>
-    </ion-fab-list>
+  <ion-fab left top *ngIf="this.canvas._objects.length" >
+    <button (click)="undoLastObject()" ion-fab color='dark' mini>
+      <ion-icon name="return-left"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab right top>
+    <button ion-fab (click)="saveDrawing()" color='dark' mini>
+      <ion-icon name="cloud-upload"></ion-icon>
+    </button>
   </ion-fab>
 
   <div class="popup-menu">
     <div class="popup-menu-overlay" (click)="togglePopupMenu()" [ngClass]="{'in': openMenu}"></div>
-    <div class="popup-menu-toggle" (click)="togglePopupMenu()" [ngClass]="{'out': openMenu}"></div>
+    <!-- <div class="popup-menu-toggle" (click)="togglePopupMenu()" [ngClass]="{'out': openMenu}"></div> -->
     <div class="popup-menu-panel" [ngClass]="{'in': openMenu}">
       <div class="popup-menu-item" *ngFor="let item of items; let i = index" (click)="goToPopup(item)">
         <ion-avatar item-start>
@@ -37,21 +39,28 @@
   </div>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar color='dark'>
+<ion-footer style="text-align: center;">
+  <ion-toolbar transparent>
     <ion-buttons left>
-      <button ion-button (click)="presentPopover($event)" icon-only solid>
-        <ion-icon name="add"></ion-icon>
+      <button ion-button (click)="addText($event)" icon-only>
+        <ion-icon name="create"></ion-icon>
+      </button>
+
+    </ion-buttons>
+    <ion-buttons>
+      <button ion-button *ngIf="this.canvas.getActiveObject()" (click)="selectDeleteObject()" icon-only>
+        <ion-icon name="trash"></ion-icon>
+      </button>
+      <button ion-button (click)="togglePopupMenu()" [ngClass]="{'out': openMenu}" icon-only>
+        <ion-icon name="happy"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons right>
-      <button ion-button (click)="presentPopover($event)" icon-only solid>
-        <ion-icon name="add"></ion-icon>
+    <ion-buttons  right>
+      <button  ion-button (click)="presentPopover($event)" *ngIf="showColorPaletteIcon" icon-only>
+        <ion-icon #styleIcon name="color-palette"></ion-icon>
       </button>
-    </ion-buttons>
-    <ion-buttons right>
-      <button ion-button (click)="presentPopover($event)" icon-only solid>
-        <ion-icon name="add"></ion-icon>
+      <button ion-button (click)="drawingMode()" icon-only>
+        <ion-icon [name]="iconMove"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>

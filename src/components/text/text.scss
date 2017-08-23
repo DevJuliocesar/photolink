@@ -1,4 +1,4 @@
-popover {
+text {
   page-api-radio-popover ion-row,
   page-api-radio-popover ion-col {
     padding: 0;
@@ -40,9 +40,9 @@ popover {
   .popover-dot-black {
     background-color: rgb(0, 0, 0);
   }
-  .ios .popover-dot.selected,
-  .md .popover-dot.selected,
-  .wp .popover-dot.selected {
+  .ios .popover-dot-default.selected,
+  .md .popover-dot-default.selected,
+  .wp .popover-dot-default.selected {
     border-width: 2px;
     border-color: #327eff;
   }

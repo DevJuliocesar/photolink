@@ -130,7 +130,6 @@ export class HomePage {
   }
 
   takePhoto() {
-    let dato = this.platform.height() - 56;
     const options: CameraOptions = {
       allowEdit: false,
       quality: 100,

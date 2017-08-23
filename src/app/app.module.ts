@@ -20,6 +20,7 @@ import firebase from 'firebase';
 
 import { AuthProvider } from '../providers/auth/auth';
 import {PopoverComponent} from '../components/popover/popover';
+import {TextComponent} from '../components/text/text';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDiZgXDmQR_2SwNeZn2yS__OAWxLxLxvhQ",
@@ -35,7 +36,8 @@ firebase.initializeApp(firebaseConfig);
 @NgModule({
   declarations: [
     MyApp,
-    PopoverComponent
+    PopoverComponent,
+    TextComponent
   ],
   imports: [
     HttpModule,
@@ -48,7 +50,8 @@ firebase.initializeApp(firebaseConfig);
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    PopoverComponent
+    PopoverComponent,
+    TextComponent
   ],
   providers: [
     StatusBar,
