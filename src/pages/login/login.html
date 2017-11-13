@@ -8,7 +8,7 @@
 
 <ion-content class="background">
   <ion-card>
-    <ion-card-header class= "titulo">
+    <ion-card-header class="titulo">
       PhotoLink
     </ion-card-header>
     <ion-card-content>
@@ -39,51 +39,24 @@
           </button>
         </ion-list>
         <b>OR</b>
-        <button ion-button block (click)="loginFacebook()" color="primary" >
+
+        <button ion-button block (click)="loginFacebook()" color="primary">
           <ion-icon name="logo-facebook"></ion-icon> Ingresar con Facebook
         </button>
-        <button ion-button block (click)="loginGmail()" color="danger" >
+        <button ion-button block (click)="loginGmail()" color="danger">
           <ion-icon name="logo-google"></ion-icon> Ingresar con Google
         </button>
       </form>
     </ion-card-content>
   </ion-card>
-
-  <!-- <div class="success">
-  </div>
-  <p text-underline>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta veniam, neque, vero perferendis inventore dolore facere deserunt quae doloremque ullam molestiae odio tenetur, cumque sequi! Quam voluptatem ex labore aliquam.</p>
- <form [formGroup]="loginForm" (ngSubmit)="loginUser()" novalidate>
-    <ion-list>
-      <ion-item>
-        <ion-label stacked>Correo:</ion-label>
-        <ion-input type="email" placeholder="Ej: mail@mail.com" formControlName="email"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="loginForm.get('email').errors && loginForm.get('email').dirty">
-        <p ion-text color="primary" *ngIf="loginForm.get('email').hasError('required')">Campo requerido</p>
-        <p ion-text color="primary" *ngIf="loginForm.get('email').hasError('pattern')">No es un email valido</p>
-      </ion-item>
-      <ion-item>
-        <ion-label stacked>Password:</ion-label>
-        <ion-input type="password" placeholder="Ej: 123345" formControlName="password"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="loginForm.get('password').errors && loginForm.get('password').dirty">
-        <p ion-text color="primary" *ngIf="loginForm.get('password').hasError('required')">Campo requerido</p>
-        <p ion-text color="primary" *ngIf="loginForm.get('password').hasError('minlength')">Minimo 6 campos</p>
-      </ion-item>
-    </ion-list>
-    <div padding>
-      <button ion-button block  type="submit" icon-left [disabled]="loginForm.invalid">
-        <ion-icon name="log-in"></ion-icon>
-        Ingresar
-      </button>
-    </div>
-  </form> -->
-  <!-- <button ion-button block (click)="loginFacebook()">Iniciar sesion con Facebook</button>
-  <button ion-button block (click)="loginGmail()">Iniciar sesion con Gmail</button>
-  <button ion-button block clear (click)="goToResetPassword()">
-    I forgot my password 🙁
-  </button>
-  <button ion-button block clear (click)="createAccount()">
-    Create a new account
-  </button> -->
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>
+      <div (click)="createAccount()">¿No tienes una cuenta?
+        <strong>Registrate!</strong>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
