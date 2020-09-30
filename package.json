@@ -44,7 +44,7 @@
     "cordova-plugin-facebook4": "^1.9.1",
     "cordova-plugin-file": "^4.3.2",
     "cordova-plugin-googleplus": "^5.1.1",
-    "cordova-plugin-inappbrowser": "^1.7.2",
+    "cordova-plugin-inappbrowser": "^3.1.0",
     "cordova-plugin-photo-library": "^2.1.0",
     "cordova-plugin-screen-orientation": "^2.0.2",
     "cordova-plugin-splashscreen": "^4.1.0",
